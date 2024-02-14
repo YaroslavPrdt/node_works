@@ -1,3 +1,7 @@
-const { sum } = require('./multiply.js')
+const { multiply } = require('./multiply.js');
+const { sum } = require('./sum.js');
 
-console.log(sum)
+let operation_request = process.argv['4'];
+
+operation_request === 'multiply' && console.log(multiply);
+operation_request === 'sum' && console.log(sum);
