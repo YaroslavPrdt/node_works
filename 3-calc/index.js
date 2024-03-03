@@ -6,4 +6,10 @@ const operations = {
 };
 
 const [ , , num1, num2, operation_request] = process.argv;
-console.log(operations[operation_request](num1, num2));
+
+Object.keys(operations).includes(operation_request) ?
+console.log(operations[operation_request](Number(num1), Number(num2))):
+console.log(`Try command ${ Object.keys(operations).join(', ') }`);
+
+
+

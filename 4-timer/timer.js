@@ -1,18 +1,17 @@
-// let seconds = Number(process.argv['2'])>0 ? Number(process.argv['2']) : 0;
-// let minutes = Number(process.argv['3'])>0 ? Number(process.argv['3'])  : 0;
-// let hours = Number(process.argv['3'])>0 ? Number(process.argv['3']) : 0;
+const time = process.argv['2'];
+const matchedTime = time.match(/(\d+)(s|m|h)/g);
 
-let time = process.argv['2'];
+const totalTimeInSeconds = matchedTime.reduce((sum, item)=>{
+    return sum + (
+            (item.match(/h/g)) && (Number(item.match(/\d+/g)[0])*60*60)||
+            (item.match(/m/g)) && (Number(item.match(/\d+/g)[0])*60)||
+            (item.match(/s/g)) && (Number(item.match(/\d+/g)[0]))
+           )
+}, 0);
 
-// let totlaTime = seconds * 1000 + minutes * 60000 + hours * 3600000;
-
-
-let hours = time.match(/\d+/g)['0'];
-let minutes = time.match(/\d+/g)['1'];
-let seconds = time.match(/\d+/g)['2'];
-
-let totlaTime = seconds * 1000 + minutes * 60000 + hours * 3600000;
+const startTime = new Date().toLocaleTimeString('ru');
+const timeLeft = new Date(totalTimeInSeconds * 1000).toISOString().substring(11, 19);
 
 setTimeout ( () => { 
-    return console.log(`Прошло > ${hours} часов, > ${minutes} минут, > ${seconds} секунд`)
-}, totlaTime );
+    return console.log(`Время запуска таймера: ${startTime}; Таймер отсчитал: ${timeLeft}`)
+}, totalTimeInSeconds*1000 );
