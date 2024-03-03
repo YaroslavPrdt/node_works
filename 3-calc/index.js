@@ -1,18 +1,15 @@
-const { multiply } = require('./multiply.js');
-const { sum } = require('./sum.js');
+const { multiply,sum } = require('./make_operations.js');
 
-let operation_request = process.argv['4'];
+const operations = {
+    multiply,
+    sum,
+};
 
-switch (operation_request) {
-    case 'multiply':
-        console.log(multiply);
-        break;
-    case 'sum':
-        console.log(sum);
-        break;
-    default:
-        console.log(`try 'sum' or 'multiply' command`);
-}
+const [ , , num1, num2, operation_request] = process.argv;
 
-// operation_request === 'multiply' && console.log(multiply);
-// operation_request === 'sum' && console.log(sum);
+Object.keys(operations).includes(operation_request) ?
+console.log(operations[operation_request](Number(num1), Number(num2))):
+console.log(`Try command ${ Object.keys(operations).join(', ') }`);
+
+
+
