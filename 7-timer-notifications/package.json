@@ -1,0 +1,10 @@
+{
+    "name": "timer-with-notifications",
+    "main": "timer.js",
+    "dependencies": {
+        "node-notifier": "^10.0.1"
+    },
+    "scripts": {
+        "start": "node timer.js"
+    }
+}
