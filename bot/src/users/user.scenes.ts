@@ -80,7 +80,10 @@ export class ReturnAsanaTasks {
 
 				if (token) {
 					try {
-						await this.asanaTasksInstace.getAsanaTasks(token);
+						const result = await this.asanaTasksInstace.getAsanaTasks(token);
+						result.data.forEach((task: object) => {
+							ctx.reply(JSON.stringify(task, null, 2));
+						});
 					} catch (error) {
 						console.log(error);
 					}
