@@ -1,15 +1,15 @@
-import { IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsString, IsInt } from 'class-validator';
 
 export class UserRegisterDto {
-	// @IsEmail({}, { message: 'Неверно указан мэйл' })
-	// email!: string;
-
-	// @IsString({ message: 'Не указан пароль' })
-	// password!: string;
-
 	@IsString({ message: 'Не указано имя' })
 	name!: string;
 
 	@IsString({ message: 'Не указан токен' })
 	token!: string;
+
+	@IsString({ message: 'Не указан gid_id' })
+	gid_id!: string;
+
+	@IsInt({ message: 'Не указан chat_id' })
+	chat_id!: number;
 }

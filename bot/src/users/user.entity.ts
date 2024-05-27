@@ -7,6 +7,8 @@ export class User {
 		// private readonly _email: string,
 		private readonly _name: string,
 		private readonly _token: string,
+		private readonly _chat_id: number,
+		private readonly _gid_id: string,
 		// passwordHash?: string,
 	) {
 		// if (passwordHash) {
@@ -24,6 +26,14 @@ export class User {
 
 	get token(): string {
 		return this._token;
+	}
+
+	get chat_id(): number {
+		return this._chat_id;
+	}
+
+	get gid_id(): string {
+		return this._gid_id;
 	}
 
 	// get password(): string {

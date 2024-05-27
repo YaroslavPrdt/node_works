@@ -6,4 +6,6 @@ export const TYPES = {
 	ConfigService: Symbol.for('ConfigService'),
 	PrismaService: Symbol.for('PrismaService'),
 	UsersRepository: Symbol.for('UsersRepository'),
+	CreateUserController: Symbol.for('CreateUserController'),
+	ReturnAsanaTasks: Symbol.for('ReturnAsanaTasks'),
 };

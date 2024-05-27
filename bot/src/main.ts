@@ -12,6 +12,7 @@ import { ConfigService } from './config/config.service';
 import { PrismaService } from './database/prisma.service';
 import { IUsersRepository } from './users/users.repository.interface';
 import { UsersRepository } from './users/users.repository';
+import { CreateUserController, ReturnAsanaTasks } from './users/user.scenes';
 
 export interface IBootstrapReturn {
 	appContainer: Container;
@@ -21,6 +22,10 @@ export interface IBootstrapReturn {
 export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<ILogger>(TYPES.ILogger).to(LoggerService).inSingletonScope();
 	bind<IUserController>(TYPES.UserController).to(UserController).inSingletonScope();
+	bind<CreateUserController>(TYPES.CreateUserController)
+		.to(CreateUserController)
+		.inSingletonScope();
+	bind<ReturnAsanaTasks>(TYPES.ReturnAsanaTasks).to(ReturnAsanaTasks).inSingletonScope();
 	bind<IUserService>(TYPES.UserService).to(UserService).inSingletonScope();
 	bind<PrismaService>(TYPES.PrismaService).to(PrismaService).inSingletonScope();
 	bind<IConfigService>(TYPES.ConfigService).to(ConfigService).inSingletonScope();

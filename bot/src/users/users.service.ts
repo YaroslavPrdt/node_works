@@ -14,24 +14,16 @@ export class UserService implements IUserService {
 		@inject(TYPES.ConfigService) private configService: IConfigService,
 		@inject(TYPES.UsersRepository) private usersRepository: IUsersRepository,
 	) {}
-	// async createUser({ email, name, token, password }: UserRegisterDto): Promise<UserModel | null> {
-	async createUser({ name, token }: UserRegisterDto): Promise<UserModel | null> {
-		const newUser = new User(name, token);
+	async createUser({ name, token, chat_id, gid_id }: UserRegisterDto): Promise<UserModel | null> {
+		const newUser = new User(name, token, chat_id, gid_id);
+		console.log(newUser);
 		const salt = this.configService.get('SALT');
 		// await newUser.setPassword(password, Number(salt));
-		const existedUser = await this.usersRepository.find(name);
-		if (existedUser) {
-			return null;
-		}
+		const existedUser = await this.usersRepository.find(chat_id);
+
 		return this.usersRepository.create(newUser);
 	}
-
-	// async validateUser({ email, password }: UserLoginDto): Promise<boolean> {
-	// 	const existedUser = await this.usersRepository.find(email);
-	// 	if (!existedUser) {
-	// 		return false;
-	// 	}
-	// 	const newUser = new User(existedUser.email, existedUser.name, existedUser.password);
-	// 	return newUser.comparePassword(password);
-	// }
+	async findUserByChatId(chat_id: number): Promise<UserModel | null> {
+		return await this.usersRepository.find(chat_id);
+	}
 }
