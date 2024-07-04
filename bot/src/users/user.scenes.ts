@@ -31,29 +31,36 @@ export class CreateUserController extends BaseController {
 		});
 
 		registerScene.on('text', async (ctx) => {
-			const asanaUserData = await this.asanaUserGidInstance.getUserGid(ctx.message.text);
+			try {
+				const asanaUserData = await this.asanaUserGidInstance.getUserGid(ctx.message.text);
 
-			const userData = {
-				token: ctx.message.text,
-				chat_id: ctx.chat.id,
-				gid_id: asanaUserData.gid,
-				name: asanaUserData.name || ctx.from.username || ctx.from.first_name || 'Неизвестный',
-			};
+				const userData = {
+					token: ctx.message.text,
+					chat_id: ctx.chat.id,
+					gid_id: asanaUserData.gid,
+					name: asanaUserData.name || ctx.from.username || ctx.from.first_name || 'Неизвестный',
+				};
 
-			const userExist = await this.userService.findUserByChatId(userData.chat_id);
+				const userExist = await this.userService.findUserByChatId(userData.chat_id);
 
-			if (userExist) {
-				ctx.reply('Вы уже сохраняли токен ранее');
-				ctx.scene.leave();
-			} else {
-				try {
-					await this.userService.createUser(userData);
-					ctx.reply('Даные сохранены');
-				} catch (error) {
-					console.error('Ошибка при сохранении данных:', error);
-					ctx.reply('Произошла ошибка. Попробуйте еще раз позже.');
+				if (userExist) {
+					ctx.reply('Вы уже сохраняли токен ранее');
+					ctx.scene.leave();
+				} else {
+					try {
+						await this.userService.createUser(userData);
+						ctx.reply('Даные сохранены');
+					} catch (error) {
+						console.error('Ошибка при сохранении данных:', error);
+						ctx.reply('Произошла ошибка. Попробуйте еще раз позже.');
+					}
+					ctx.scene.leave();
 				}
-				ctx.scene.leave();
+			} catch (error) {
+				if (error instanceof Error) {
+					ctx.reply(error.message);
+					ctx.scene.leave();
+				}
 			}
 		});
 		return registerScene;

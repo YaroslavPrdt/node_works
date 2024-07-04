@@ -31,9 +31,6 @@ export class App {
 		@inject(TYPES.PrismaService) private prismaService: PrismaService,
 		@inject(TYPES.UserService) userService: UserService,
 	) {
-		// this.logger = logger;
-		// this.userController = userController;
-		// this.createUserController = createUserController;
 		this.stage = new Scenes.Stage<IUserContext>();
 		this.bot = new Telegraf<IUserContext>(this.configService.get('TGTOKEN'));
 		this.bot.telegram.setMyCommands([
@@ -47,11 +44,6 @@ export class App {
 	useMiddleware(): void {
 		this.bot.use(new LocalSession({ database: 'session.json' }).middleware());
 		this.bot.use(this.stage.middleware());
-		this.bot.use((ctx, next) => {
-			ctx.session.myProp;
-			ctx.scene.session.myProps;
-			next();
-		});
 		this.registerUserControllerMiddleware();
 		this.getTasksMiddleware();
 	}
