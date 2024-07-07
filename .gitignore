@@ -1,2 +1,9 @@
 .DS_Store
+.env
+/dist
+/bot/dist
 node_modules
+9-api-express
+10-ts-api-express
+session.json
+pgdata
